@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exercise10 Автоматическая расстановка элементов на графе</title>
+    <style>
+        html, body, #canvas {
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script type="application/javascript">
+        var nodeArray = [
+            {
+                id: 1,
+                name: "node 1"
+            },
+            {
+                id: 2,
+                name: "node 2"
+            },
+            {
+                id: 3,
+                name: "node 3"
+            },
+            {
+                id: 4,
+                name: "node 4"
+            },
+            {
+                id: 5,
+                name: "node 5"
+            },
+            {
+                id: 6,
+                name: "node 6"
+            },
+            {
+                id: 7,
+                name: "node 7"
+            }
+        ];
+
+        var edgeArray = [
+            {
+                id: 1,
+                sourceId: 1,
+                targetId: 2
+            },
+            {
+                id: 2,
+                sourceId: 3,
+                targetId: 6
+            }
+        ];
+
+        function onload() {
+            var canvas = document.getElementById("canvas");
+            canvas.width = window.screen.availWidth;
+            canvas.height = window.screen.availHeight;
+            var context = canvas.getContext("2d");
+            context.strokeStyle = "BLACK";
+
+            optimalPlacement();
+
+            var nodeMap={};
+            for (var i = 0; i < nodeArray.length; i++) {
+                nodeMap[nodeArray[i].id]=nodeArray[i];
+            }
+
+            for (var i = 0; i < edgeArray.length; i++) {
+                var sourceNode = nodeMap[edgeArray[i].sourceId];
+                edgeArray[i].sourceX=sourceNode.x+sourceNode.w/2;
+                edgeArray[i].sourceY=sourceNode.y+sourceNode.h/2;
+                var targetNode = nodeMap[edgeArray[i].targetId];
+                edgeArray[i].targetX=targetNode.x+targetNode.w/2;
+                edgeArray[i].targetY=targetNode.y+targetNode.h/2;
+            }
+
+            for (var i = 0; i < nodeArray.length; i++) {
+                context.fillRect(nodeArray[i].x, nodeArray[i].y, nodeArray[i].w, nodeArray[i].h);
+            }
+
+            for (var i = 0; i < edgeArray.length; i++) {
+                context.beginPath();
+                context.moveTo(edgeArray[i].sourceX, edgeArray[i].sourceY);
+                context.lineTo(edgeArray[i].targetX, edgeArray[i].targetY);
+                context.closePath();
+                context.stroke();
+            }
+        }
+
+        function optimalPlacement(){
+            //TODO
+            for (var i = 0; i < nodeArray.length; i++) {
+                nodeArray[i].x = 50;
+                nodeArray[i].y = 50 + 50 * i;
+                nodeArray[i].w = 100;
+                nodeArray[i].h = 30;
+            }
+        }
+
+    </script>
+</head>
+<body onload="onload()">
+<canvas id="canvas"></canvas>
+</body>
+</html>

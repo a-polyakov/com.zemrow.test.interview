@@ -1,0 +1,33 @@
+Design an API that will create/update expense reports and provide audit trail for each action
+• expense reports: When you do business travel, you will create expense like flight, car renting and hotel fee.
+  An expense report includes all the expense in the travel, like the expense item (flight/car renting/hotel),
+  transaction date, fee amount
+• audit trail: all the actions when creating or updating expense report, like who and when the expense reports
+  are created and updated
+
+Architecture
+ A microservice-compatible architecture, but starting as a modular monolith. We follow Domain-Driven Design.
+Backend
+ Java with Spring Boot, API documentation via OpenAPI (Swagger).
+Database
+ PostgreSQL with a replica.
+Nginx at the entry point (certificates, load balancing, DDoS protection).
+
+for developers, create a docker composer file to run all the necessary infrastructure locally.
+
+When scaling is needed, first increase the number of application instances.
+Move read-only load to the replica.
+Set up CI/CD.
+Add seamless (zero-downtime) updates: run 3 nodes, take 1 out of Nginx, update it, direct part of the load to it, and if everything is fine, update the rest.
+Integrate monitoring and logging systems.
+Add distributed cache (Redis).
+
+When the domain model is stable and user load is understood, extract modules that need to be separated (microservices with gRPC).
+If full-text search is required, add Elasticsearch (OpenSearch).
+when the workload for generating reports increases, use specialized tools for this, гse OLAP or ClickHouse for reporting systems.
+Messaging
+ For building processing chains, use queues—RabbitMQ, and Kafka if possible.
+General Approach
+The further complexity of the system depends on the specific application.
+There is no silver bullet: what worked for others may not work for you.
+The best strategy is to test different solutions under conditions close to production—using obfuscated production data and emulated user load.

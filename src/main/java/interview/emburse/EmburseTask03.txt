@@ -1,0 +1,13 @@
+Consider you have student and class tables in DB, not all students are enrolled in classes.
+Make a query to get students that are enrolled in at least 2 classes
+
+Scheme:
+students(id, name)
+class(id, name)
+students_class(id, student_id, class_id)
+
+select s.id, s.name, count(sc.class_id)
+from students s
+join students_class sc on sc.student_id = s.id
+group by s.id, s.name
+having count(sc.class_id) > 2

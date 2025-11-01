@@ -2,8 +2,8 @@ package interview.dellin.exercise09;
 
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 /**
